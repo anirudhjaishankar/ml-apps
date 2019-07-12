@@ -1,0 +1,19 @@
+{
+  "name": "bloodtypingapp",
+  "version": "1.0.0",
+  "description": "Detemines Blood group and generate PDF report",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/anirudhjaishankar/ml-apps.git"
+  },
+  "author": "Anirudh",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/anirudhjaishankar/ml-apps/issues"
+  },
+  "homepage": "https://github.com/anirudhjaishankar/ml-apps#readme"
+}
