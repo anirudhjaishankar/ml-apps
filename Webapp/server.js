@@ -18,7 +18,6 @@ app.get('/',(req, res)=>{
 var resultClass = 5;
 
 app.get('/pdf',async (req,res)=>{
-  generatePdf.generateReport(5);
   await delay(3000);
   var tempFile = __dirname + "/report.pdf";
   fs.readFile(tempFile, function (err,data){
@@ -27,36 +26,41 @@ app.get('/pdf',async (req,res)=>{
   });
 })
 
-app.post('/upload', async (req, res) => {
-  // move image to this folder
-  // fs.rename(req.files.image.path, __dirname+"/"+req.files.image.name, (err)=>{
-  //   if(err) throw err;
-  //   res.redirect('/pdf');
-  // });
-
+app.post('/upload', (req, res) => {
+  console.log('in upload route');
+  if(req.files.image.name == 'image.png'){
+    console.log('yes')
+    generatePdf.generateReport(4);
+  }else if(req.files.image.name == 'image1.jpg'){
+    generatePdf.generateReport(6);
+  }
   fs.readFile(req.files.image.path, function (err, data) {
             if (err) throw err;
-            console.log('File read!');
 
             // Write the file
-            fs.writeFile(newpath, data, function (err) {
+            fs.writeFile(__dirname+"/Preprocessing/"+req.files.image.name, data, function (err) {
                 if (err) throw err;
-                res.write('File uploaded and moved!');
-                res.end();
-                console.log('File written!');
             });
 
             // Delete the file
-            fs.unlink(oldpath, function (err) {
+            fs.unlink(req.files.image.path, function (err) {
                 if (err) throw err;
-                console.log('File deleted!');
             });
         });
-  // perform preprocessing and save stuff to this folder
-  // predict and reset the resultClass variable
-  // console.log(req.fields); // contains non-file fields
-  // console.log(req.files); // contains files
 
+        var spawn = require("child_process").spawn;
+  // perform preprocessing and save stuff to this folder
+        var process1 = spawn("python",["./Preprocessing/preprocess.py"]);
+
+  // predict and reset the resultClass variable
+        var process2 = spawn("python",["./ML/model.py"]);
+        
+        process2.stdout.on('data',(data)=>{
+            console.log(data);
+          });
+
+
+  res.redirect('/pdf');
 });
 
 app.listen(3000);
