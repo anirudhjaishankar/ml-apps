@@ -6,6 +6,7 @@ module.exports = {
   generateReport:
     function(a)
     {
+      var images = [];
       var bg = "O+ve";
       if(a == 1){
         bg = "O+ve";
@@ -26,8 +27,21 @@ module.exports = {
       }
       const doc = new pdfDoc;
       doc.pipe(fs.createWriteStream('report.pdf'));
-      doc.fontSize(32).text("Online Blood typing Labs",100,80).moveDown();
+      doc.fontSize(32).text("ONLINE BLOOD TYPING LABS",{
+        align:'center'
+      }).moveDown();
       doc.fontSize(24).text("Your Blood Group is :" + bg);
+      doc.addPage();
+      doc.image('chart.png',{
+        fit:[350,350],
+        align:'center',
+        valign:'center'
+      });
+      doc.image('give.jpg',{
+        fit:[350,350],
+        align:'center',
+        valign:'center'
+      }).moveDown();
       doc.end();
     }
 }
