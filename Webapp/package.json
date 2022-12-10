@@ -19,7 +19,7 @@
   "dependencies": {
     "delay": "^4.3.0",
     "ejs": "^2.6.2",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "express-formidable": "^1.2.0",
     "nodemon": "^1.19.1",
     "pdfkit": "^0.10.0"
